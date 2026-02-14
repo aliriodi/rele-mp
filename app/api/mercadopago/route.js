@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/lib/mongo";
+import { dbConnect } from "@/config/mongo";
 import MercadoPagoEvent from "@/models/MercadoPagoEvent";
 
 export async function POST(req) {
@@ -12,7 +12,7 @@ export async function POST(req) {
     }
 
     // Conectar DB
-    await connectDB();
+    await dbConnect();
 
     // Consultar pago real
     const mpRes = await fetch(
