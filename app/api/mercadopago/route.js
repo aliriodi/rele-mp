@@ -14,18 +14,18 @@ export async function POST(req) {
     // Conectar DB
     await dbConnect();
  // 1) Guardar SIEMPRE el evento crudo
- const eventDoc = await MercadoPagoEvent.create({
-    eventId: String(body?.id || ""),
-    paymentId: paymentId || undefined,
-    action: body?.action,
-    type: body?.type || body?.topic,
-    api_version: body?.api_version,
-    live_mode: body?.live_mode,
-    user_id: body?.user_id,
-    date_created: body?.date_created ? new Date(body.date_created) : new Date(),
-    payload: body,
-    lookup_ok: false,
-  });
+//  const eventDoc = await MercadoPagoEvent.create({
+//     eventId: String(body?.id || ""),
+//     paymentId: paymentId || undefined,
+//     action: body?.action,
+//     type: body?.type || body?.topic,
+//     api_version: body?.api_version,
+//     live_mode: body?.live_mode,
+//     user_id: body?.user_id,
+//     date_created: body?.date_created ? new Date(body.date_created) : new Date(),
+//     payload: body,
+//     lookup_ok: false,
+//   });
   //las lineas anteriores se van a eliminar
   // al ver que el evento se guarde 
   //y se ponga ne produccion
@@ -48,26 +48,26 @@ export async function POST(req) {
     const payment = await mpRes.json();
 
     // Guardar evento (anti duplicado automático)
-    await MercadoPagoEvent.create({
-      paymentId: payment.id,
-      action: body.action,
-      type: body.type,
-      api_version: body.api_version,
-      live_mode: body.live_mode,
-      user_id: body.user_id,
-      date_created: body.date_created
-        ? new Date(body.date_created)
-        : new Date(),
+    // await MercadoPagoEvent.create({
+    //   paymentId: payment.id,
+    //   action: body.action,
+    //   type: body.type,
+    //   api_version: body.api_version,
+    //   live_mode: body.live_mode,
+    //   user_id: body.user_id,
+    //   date_created: body.date_created
+    //     ? new Date(body.date_created)
+    //     : new Date(),
 
-      payload: body,
+    //   payload: body,
 
-      status: payment.status,
-      status_detail: payment.status_detail,
-      transaction_amount: payment.transaction_amount,
-      description: payment.description,
-      external_reference: payment.external_reference,
-      metadata: payment.metadata,
-    });
+    //   status: payment.status,
+    //   status_detail: payment.status_detail,
+    //   transaction_amount: payment.transaction_amount,
+    //   description: payment.description,
+    //   external_reference: payment.external_reference,
+    //   metadata: payment.metadata,
+    // });
 
     // Solo pagos aprobados
     if (payment.status !== "approved") {
