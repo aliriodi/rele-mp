@@ -46,3 +46,8 @@ export async function POST(req) {
     return NextResponse.json({ ok: false }, { status: 500 });
   }
 }
+
+
+export function GET() {
+    return NextResponse.json({ ok: true, msg: "webhook up" });
+  }
