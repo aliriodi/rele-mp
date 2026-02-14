@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/mongodb";
+import { dbConnect } from "@/lib/mongo";
 import MercadoPagoEvent from "@/models/MercadoPagoEvent";
 
 export async function POST(req) {
