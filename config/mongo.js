@@ -9,11 +9,11 @@ import mongoose from 'mongoose'
 const dbConnect = async () => {
   const DB_URI = process.env.DB_URI;
   const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+   
   };
 
   try {
+    console.log(DB_URI)
     await mongoose.connect(DB_URI, options);
     console.log("******CONEXION CORRECTA*******");
   } catch (error) {

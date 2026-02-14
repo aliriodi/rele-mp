@@ -2,6 +2,12 @@ import { NextResponse } from "next/server";
 import  dbConnect  from "../../../config/mongo";
 import MercadoPagoEvent from "../../../models/MercadoPagoEvent";
 
+// export async function GET() {
+//     await dbConnect();
+//     const doc = await MercadoPagoEvent.create({ action: "test", payload: { ok: true } });
+//     return NextResponse.json({ ok: true, id: String(doc._id) });
+//   }
+
 export async function POST(req) {
   try {
     const body = await req.json();
@@ -48,26 +54,26 @@ export async function POST(req) {
     const payment = await mpRes.json();
 
     // Guardar evento (anti duplicado automático)
-    // await MercadoPagoEvent.create({
-    //   paymentId: payment.id,
-    //   action: body.action,
-    //   type: body.type,
-    //   api_version: body.api_version,
-    //   live_mode: body.live_mode,
-    //   user_id: body.user_id,
-    //   date_created: body.date_created
-    //     ? new Date(body.date_created)
-    //     : new Date(),
+    await MercadoPagoEvent.create({
+      paymentId: payment.id,
+      action: body.action,
+      type: body.type,
+      api_version: body.api_version,
+      live_mode: body.live_mode,
+      user_id: body.user_id,
+      date_created: body.date_created
+        ? new Date(body.date_created)
+        : new Date(),
 
-    //   payload: body,
+      payload: body,
 
-    //   status: payment.status,
-    //   status_detail: payment.status_detail,
-    //   transaction_amount: payment.transaction_amount,
-    //   description: payment.description,
-    //   external_reference: payment.external_reference,
-    //   metadata: payment.metadata,
-    // });
+      status: payment.status,
+      status_detail: payment.status_detail,
+      transaction_amount: payment.transaction_amount,
+      description: payment.description,
+      external_reference: payment.external_reference,
+      metadata: payment.metadata,
+    });
 
     // Solo pagos aprobados
     if (payment.status !== "approved") {
