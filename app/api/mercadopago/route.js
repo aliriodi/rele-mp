@@ -24,9 +24,9 @@ export async function POST(req) {
       }
     );
 
-    // if (!mpRes.ok) {
-    //   return NextResponse.json({ ok: true });
-    // }
+    if (!mpRes.ok) {
+      return NextResponse.json({ ok: true });
+    }
 
     const payment = await mpRes.json();
 
